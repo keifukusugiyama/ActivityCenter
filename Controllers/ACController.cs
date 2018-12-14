@@ -37,7 +37,6 @@ namespace ActivityCenter.Controllers
             .Include(e => e.Participants)
             .Include(e => e.Coordinator)
             .OrderBy(e => e.Date)
-            .OrderBy(e => e.Time)
             .ToList();
             
             ViewBag.allEvents = allEvents;
