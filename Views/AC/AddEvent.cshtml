@@ -1,0 +1,44 @@
+@{
+    ViewData["Title"] = "Add Activity";
+}
+<h1>Create an Activity!</h1>
+
+@model Event
+<form asp-action="Create" asp-controller="AC" method="post">
+
+    <div style="color:red">
+    <span asp-validation-for="Title"></span>
+    </div>
+    <label asp-for="Title">Title:</label>
+    <input asp-for="Title">
+
+    <div style="color:red">
+    <span asp-validation-for="Date"></span>
+    </div>
+    <label asp-for="Date">Date: </label>
+    <input asp-for="Date">
+
+    <div style="color:red">
+        <span asp-validation-for="Time"></span>
+    </div>
+    <label asp-for="Time">Time: </label>
+    <input asp-for="Time">
+
+    <div style="color:red">
+        <span asp-validation-for="Duration"></span>
+    </div>
+    <label asp-for="Duration">Duration: </label>
+    <input asp-for="Duration">
+
+    <div style="color:red">
+        <span asp-validation-for="Description"></span>
+    </div>
+    <label asp-for="Description">Description:</label>
+    <br>
+    <textarea asp-for="Description" cols="80" rows="5"></textarea>
+
+    <input hidden asp-for="UserId" value="@ViewBag.UserId">
+
+    <br>
+    <button type="submit">Create Activity</button>
+</form>

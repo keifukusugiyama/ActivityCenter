@@ -1,0 +1,68 @@
+@{
+    ViewData["Title"] = "Dojo Activity Center";
+}
+
+<p>Welcome @ViewBag.LoggedInUserName !</p>
+
+<table class="table table-striped table-bordered">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Activity</th>
+            <th scope="col" >Date and Time</th> 
+            <th scope="col">Duration</th>
+            <th scope="col">Event Coordinator</th>
+            <th scope="col">Number of Participants</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+    @{
+        if (ViewBag.allEvents.Count != 0)
+        {
+            foreach(Event eve in @ViewBag.allEvents)
+        {
+            if(@eve.Date > DateTime.Now)
+            {
+            <tr>
+                <td> 
+                    <a href="/activity/@eve.EventId">@eve.Title</a>
+                </td>
+                <td>@eve.Date.ToString("MM/dd") at @eve.Time.ToString("h:mm tt")</td>
+                <td>@eve.Duration</td>
+                <td>@eve.Coordinator.FirstName</td>
+                <td>@eve.Participants.Count</td>
+                <td> 
+                    @if(@eve.UserId == @ViewBag.LoggedInUserId)
+                    {
+                        <button><a href="/deleteEvent/@eve.EventId">DELETE</a></button>
+                    }
+                    
+                    else if (@eve.Participants.Any(p => p.UserId == @ViewBag.LoggedInUserId))
+                    {
+                        <button><a href="/deleteParticipant/@eve.EventId">Leave</a></button>
+                    }
+                    else{
+                        @model Participant
+                        <form asp-action="addParticipant" asp-controller="AC" method="post">
+                            <input type="hidden" asp-for="UserId" value="@ViewBag.LoggedInUserId">
+                            <input type="hidden" asp-for="EventId" value="@eve.EventId">
+                            <button type="submit">Join</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+            }
+
+            
+
+        }
+        }
+        
+        
+    }
+        
+    </tbody>
+
+</table>
+
+<button><a href="/New">Create Activity</a></button>

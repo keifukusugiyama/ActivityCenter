@@ -1,0 +1,40 @@
+@{
+    ViewData["Title"] = "Activity Details";
+}
+
+<h1>@ViewBag.EventDetail.Title </h1>
+
+@if(@ViewBag.EventDetail.UserId == @ViewBag.LoggedInUserId)
+{
+    <button><a href="/deleteEvent/@ViewBag.EventDetail.EventId">DELETE</a></button>
+}
+
+
+else if (ViewBag.IsParticipant)
+{
+    <button><a href="/deleteParticipant/@ViewBag.EventDetail.EventId">Leave</a></button>
+}
+else{
+    @model Participant
+    <form asp-action="addParticipant" asp-controller="AC" method="post">
+        <input type="hidden" asp-for="UserId" value="@ViewBag.LoggedInUserId">
+        <input type="hidden" asp-for="EventId" value="@ViewBag.EventDetail.EventId">
+        <button type="submit">Join</button>
+    </form>
+}
+
+<h4>Event Coordinator: @ViewBag.EventDetail.Coordinator.FirstName </h4>
+<h6>Date: @ViewBag.EventDetail.Date.ToString("MMMM dd, yyyy")</h6>
+<h4>Description: </h4>
+<p>@ViewBag.EventDetail.Description</p>
+
+<h4>Participants:</h4>
+<ul>
+    @{
+        foreach(var user in @ViewBag.EventDetail.Participants)
+        {
+            <li>@user.User.FirstName @user.User.LastName</li>
+        }
+    }
+    
+</ul>
