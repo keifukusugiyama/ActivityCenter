@@ -165,7 +165,7 @@ namespace ActivityCenter.Controllers
                 return RedirectToAction("Index", "LoginReg");
             }
             Participant deletingParticipant = dbContext.Participants
-            .Where(r => r.ParticipantId == id && r.UserId == HttpContext.Session.GetInt32("UserId"))
+            .Where(r => r.EventId == id && r.UserId == HttpContext.Session.GetInt32("UserId"))
             .FirstOrDefault();
 
             dbContext.Participants.Remove(deletingParticipant);
