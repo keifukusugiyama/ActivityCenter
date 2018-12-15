@@ -27,7 +27,6 @@ _UpgradeReport_Files/
 bin/
 obj/
 .vscode/
-wwwroot/lib/
 TestResults/
 ###################
 # Web publish log #
